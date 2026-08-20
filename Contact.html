@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - NGO Fund Management</title>
+
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#c8e6c9;
+}
+
+.container{
+     display:flex;
+    min-height:100vh;
+}
+/* Sidebar */
+
+.sidebar{
+    width: 250px;
+    height: 100vh;
+    background: #0b2f2d;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo{
+    text-align:center;
+    padding:30px 20px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.logo i{
+    font-size:45px;
+    color:#5fd38d;
+    margin-bottom:10px;
+}
+
+.logo h2{
+    font-size:22px;
+}
+
+.logo span{
+    font-size:13px;
+    color:#ddd;
+}
+
+.menu{
+    list-style:none;
+    padding:20px 0;
+    flex:1;
+}
+
+.menu li{
+    margin:8px 15px;
+}
+
+.menu li a{
+    text-decoration:none;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:14px 18px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.menu li a:hover,
+.menu li.active a{
+    background:#2c8d57;
+}
+
+.logout{
+    padding:20px;
+    border-top:1px solid rgba(255,255,255,.1);
+    color:#fff;
+    text-decoration:none;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    cursor:pointer;
+    margin-top: auto;
+}
+
+/* Main */
+
+.main-content{
+    flex:1;
+    padding:30px;
+}
+
+
+h1{
+    text-align:center;
+    color:#2e7d32;
+    margin-bottom:30px;
+}
+
+.accordion{
+    width:100%;
+    background:#2e7d32;
+    color:white;
+    padding:16px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-size:17px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+    border-radius:6px;
+}
+
+.accordion:hover{
+    background:#1b5e20;
+}
+
+.panel{
+    max-height:0;
+    overflow:hidden;
+    background:white;
+    transition:0.4s;
+    border-radius:0 0 6px 6px;
+}
+
+.panel p{
+    padding:18px;
+    color:#444;
+    line-height:1.6;
+}
+
+.contact{
+    margin-top:50px;
+}
+
+.contact h2{
+    text-align:center;
+    color:#2e7d32;
+    margin-bottom:25px;
+}
+
+.contact-box{
+    display:flex;
+    justify-content:space-between;
+    background:white;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+.left,.right{
+    width:45%;
+    font-size:18px;
+}
+
+strong{
+    color:#d32f2f;
+}
+</style>
+<!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+<!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fas fa-seedling"></i>
+            <h2>NGO Fund</h2>
+            <span>Management System</span>
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a href="Dashboard.html">
+                    <i class="fas fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
+
+ <li>
+                <a href="donarprofile.html">
+                    <i class="fas fa-users"></i>
+                    Profile
+                </a>
+            </li>
+            
+            <li>
+                <a href="Donations.html">
+                    <i class="fas fa-user"></i>
+                    Donations
+                </a>
+            </li>
+
+            <li>
+
+            <li>
+                <a href="Expenses.html">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Expenses
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="Contact.html">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Contact Us
+                </a>
+            </li>
+
+            <li>
+                <a href="settings.html">
+                    <i class="fas fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="logout">
+            <!--<a href="Login.html">-->
+                <i class="fas fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+    <h1>Frequently Asked Questions</h1>
+
+    <div class="faq">
+
+        <button class="accordion">
+            1. What is an NGO Fund Management System?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>It is a platform used to manage donations, donors, expenses, and NGO funds efficiently.</p>
+        </div>
+
+        <button class="accordion">
+            2. How can I donate to the NGO?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>You can donate using UPI, QR Code, bank transfer, debit/credit card, or online payment methods.</p>
+        </div>
+
+        <button class="accordion">
+            3. Will I receive a donation receipt?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Yes. A digital receipt is generated after every successful donation.</p>
+        </div>
+
+        <button class="accordion">
+            4. How can I track my donations?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Log in to your account and open the Donation History section.</p>
+        </div>
+
+        <button class="accordion">
+            5. How are the donated funds used?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Funds are used for education, healthcare, food distribution, and community welfare projects.</p>
+        </div>
+
+        <button class="accordion">
+            6. Is my personal and payment information secure?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Yes. The system uses secure methods to protect your personal and payment information.</p>
+        </div>
+
+        <button class="accordion">
+            7. How can I contact the NGO for support?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>You can contact us through the email ID or mobile number provided below.</p>
+        </div>
+
+    </div>
+
+    <div class="contact">
+        <h2>Contact Us</h2>
+
+        <div class="contact-box">
+            <div class="left">
+                <strong>Email ID :</strong>&nbsp
+                bngot.organization.ac.in
+            </div>
+
+            <div class="right">
+                <strong>Mobile No :</strong> &nbsp
+                9876543216
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+//Logout
+const k = document.querySelector(".logout");
+	k.addEventListener("click", function(e){
+		e.preventDefault;
+		alert("Logout Successfully.");
+		window.location.href="Login.html";
+		});
+
+const accordion = document.querySelectorAll(".accordion");
+
+accordion.forEach(item => {
+    item.addEventListener("click", function () {
+
+        this.classList.toggle("active");
+
+        let panel = this.nextElementSibling;
+
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

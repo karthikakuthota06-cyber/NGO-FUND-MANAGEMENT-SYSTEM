@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - NGO Fund Management</title>
+
+    <style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#c8e6c9;
+}
+
+.container{
+    width:80%;
+    margin:40px auto;
+}
+
+h1{
+    text-align:center;
+    color:#2e7d32;
+    margin-bottom:30px;
+}
+
+.accordion{
+    width:100%;
+    background:#2e7d32;
+    color:white;
+    padding:16px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-size:17px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+    border-radius:6px;
+}
+
+.accordion:hover{
+    background:#1b5e20;
+}
+
+.panel{
+    max-height:0;
+    overflow:hidden;
+    background:white;
+    transition:0.4s;
+    border-radius:0 0 6px 6px;
+}
+
+.panel p{
+    padding:18px;
+    color:#444;
+    line-height:1.6;
+}
+
+.contact{
+    margin-top:50px;
+}
+
+.contact h2{
+    text-align:center;
+    color:#2e7d32;
+    margin-bottom:25px;
+}
+
+.contact-box{
+    display:flex;
+    justify-content:space-between;
+    background:white;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+.left,.right{
+    width:45%;
+    font-size:18px;
+}
+
+strong{
+    color:#d32f2f;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Frequently Asked Questions</h1>
+
+    <div class="faq">
+
+        <button class="accordion">
+            1. What is an NGO Fund Management System?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>It is a platform used to manage donations, donors, expenses, and NGO funds efficiently.</p>
+        </div>
+
+        <button class="accordion">
+            2. How can I donate to the NGO?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>You can donate using UPI, QR Code, bank transfer, debit/credit card, or online payment methods.</p>
+        </div>
+
+        <button class="accordion">
+            3. Will I receive a donation receipt?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Yes. A digital receipt is generated after every successful donation.</p>
+        </div>
+
+        <button class="accordion">
+            4. How can I track my donations?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Log in to your account and open the Donation History section.</p>
+        </div>
+
+        <button class="accordion">
+            5. How are the donated funds used?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Funds are used for education, healthcare, food distribution, and community welfare projects.</p>
+        </div>
+
+        <button class="accordion">
+            6. Is my personal and payment information secure?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>Yes. The system uses secure methods to protect your personal and payment information.</p>
+        </div>
+
+        <button class="accordion">
+            7. How can I contact the NGO for support?
+            <span>▼</span>
+        </button>
+        <div class="panel">
+            <p>You can contact us through the email ID or mobile number provided below.</p>
+        </div>
+
+    </div>
+
+    <div class="contact">
+        <h2>Contact Us</h2>
+
+        <div class="contact-box">
+            <div class="left">
+                <strong>Email ID :</strong>&nbsp
+                bngot.organization.ac.in
+            </div>
+
+            <div class="right">
+                <strong>Mobile No :</strong> &nbsp
+                9876543216
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const accordion = document.querySelectorAll(".accordion");
+
+accordion.forEach(item => {
+    item.addEventListener("click", function () {
+
+        this.classList.toggle("active");
+
+        let panel = this.nextElementSibling;
+
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

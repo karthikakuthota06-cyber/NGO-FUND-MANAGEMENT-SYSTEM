@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Fund Management - Donations</title>
+
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+   background:#c8e6c9;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* Sidebar */
+
+.sidebar{
+    width: 250px;
+    height: 100vh;
+    background: #0b2f2d;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    display: flex; 
+}
+
+.logo{
+    text-align:center;
+    padding:30px 20px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.logo i{
+    font-size:45px;
+    color:#5fd38d;
+    margin-bottom:10px;
+}
+
+.logo h2{
+    font-size:22px;
+}
+
+.logo span{
+    font-size:13px;
+    color:#ddd;
+}
+
+.menu{
+    list-style:none;
+    padding:20px 0;
+    flex:1;
+}
+
+.menu li{
+    margin:8px 15px;
+}
+
+.menu li a{
+    text-decoration:none;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.menu li a:hover,
+.menu li.active a{
+    background:#2c8d57;
+}
+
+.logout{
+    padding:20px;
+    border-top:1px solid rgba(255,255,255,.1);
+    color:#fff;
+    text-decoration:none;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    cursor:pointer;
+    margin-top: auto;
+}
+
+
+/* Main */
+
+.main{
+    flex:1;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.menu-btn{
+    border:none;
+    background:none;
+    font-size:24px;
+    cursor:pointer;
+}
+
+.add-btn{
+    background:#28a745;
+    color:#fff;
+    border:none;
+    padding:12px 22px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.add-btn:hover{
+    background:#218838;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:15px;
+}
+
+/* Table */
+
+.table-container{
+    background:#fff;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:16px;
+    text-align:left;
+}
+
+th{
+    background:#f2f2f2;
+}
+
+tbody tr{
+    border-bottom:1px solid #eee;
+}
+
+tbody tr:hover{
+    background:#f8f8f8;
+}
+
+/* Action Buttons */
+
+.view,
+.edit,
+.delete{
+    border:none;
+    color:#fff;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+.view{
+    background:#3498db;
+}
+
+.edit{
+    background:#2ecc71;
+}
+
+.delete{
+    background:#e74c3c;
+}
+
+/* Footer */
+
+.table-footer{
+    margin-top:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.pagination button{
+    width:38px;
+    height:38px;
+    border:none;
+    background:#fff;
+    cursor:pointer;
+    margin-left:5px;
+    border-radius:5px;
+    box-shadow:0 1px 4px rgba(0,0,0,.1);
+}
+
+.pagination button.active{
+    background:#28a745;
+    color:#fff;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.sidebar{
+    position:fixed;
+    left:-260px;
+    top:0;
+    height:100%;
+    z-index:1000;
+}
+
+.sidebar.show{
+    left:0;
+}
+
+.main{
+    width:100%;
+    padding:20px;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+.table-footer{
+    flex-direction:column;
+    gap:15px;
+}
+
+.add-btn{
+    padding:10px 16px;
+}
+}
+</style>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <i class="fas fa-seedling"></i>
+            <h2>NGO Fund</h2>
+            <span>Management System</span>
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a href="Dashboard.html">
+                    <i class="fas fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="donarprofile.html">
+                    <i class="fas fa-users"></i>
+                    Profile
+                </a>
+            </li>
+            
+            <li class="active">
+                <a href="Donations.html">
+                    <i class="fas fa-user"></i>
+                    Donations
+                </a>
+            </li>
+
+            <li>
+
+            <li>
+                <a href="Expenses.html">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Expenses
+                </a>
+            </li>
+
+            <li>
+                <a href="Contact.html">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Contact Us
+                </a>
+            </li>
+
+            <li>
+                <a href="settings.html">
+                    <i class="fas fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="logout">
+            <!--<a href="Login.html">-->
+                <i class="fas fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Header -->
+        <div class="topbar">
+
+            <button id="menuBtn" class="menu-btn">
+                <i class="fa-solid fa-bars"></i>
+  
+          </button><h1>Donations</h1>
+          
+            <button class="add-btn">
+                <i class="fa-solid fa-plus"></i>
+                Donate Here
+            </button>
+
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search donors...">
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+
+            <table id="donorTable">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Total Donations</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Ramesh Babu</td>
+                        <td>ramesh@gmail.com</td>
+                        <td>9876543210</td>
+                        <td>₹25,000</td>
+                        <td>
+                            <button class="view"><i class="fa-solid fa-eye"></i></button>
+                            <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Priya Sharma</td>
+                        <td>priya@gmail.com</td>
+                        <td>9876601234</td>
+                        <td>₹26,000</td>
+                        <td>
+                            <button class="view"><i class="fa-solid fa-eye"></i></button>
+                            <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Anita Verma</td>
+                        <td>anita@gmail.com</td>
+                        <td>9876112345</td>
+                        <td>₹18,000</td>
+                        <td>
+                            <button class="view"><i class="fa-solid fa-eye"></i></button>
+                            <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Mohammed Ali</td>
+                        <td>ali@gmail.com</td>
+                        <td>9876223446</td>
+                        <td>₹15,000</td>
+                        <td>
+                            <button class="view"><i class="fa-solid fa-eye"></i></button>
+                            <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Suresh Kumar</td>
+                        <td>suresh@gmail.com</td>
+                        <td>9876334487</td>
+                        <td>₹18,000</td>
+                        <td>
+                            <button class="view"><i class="fa-solid fa-eye"></i></button>
+                            <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="table-footer">
+
+            <p>Showing 1 to 5 of 15 entries</p>
+
+            <div class="pagination">
+                <button><i class="fa-solid fa-angle-left"></i></button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button><i class="fa-solid fa-angle-right"></i></button>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+// Sidebar Toggle
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+
+menuBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("show");
+});
+//Logout
+const k = document.querySelector(".logout");
+	k.addEventListener("click", function(e){
+		e.preventDefault;
+		alert("Logout Successfully.");
+		window.location.href="Login.html";
+		});
+
+// Search Function
+const searchInput = document.getElementById("searchInput");
+const table = document.getElementById("donorTable");
+const rows = table.getElementsByTagName("tr");
+
+searchInput.addEventListener("keyup", function () {
+    const filter = this.value.toLowerCase();
+
+    for (let i = 1; i < rows.length; i++) {
+        const text = rows[i].textContent.toLowerCase();
+
+        if (text.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+});
+
+// View Button
+document.querySelectorAll(".view").forEach(button => {
+    button.addEventListener("click", function () {
+        const name = this.closest("tr").children[0].textContent;
+        alert("Viewing details of " + name);
+    });
+});
+
+// Edit Button
+document.querySelectorAll(".edit").forEach(button => {
+    button.addEventListener("click", function () {
+        const name = this.closest("tr").children[0].textContent;
+        alert("Editing " + name);
+    });
+});
+
+// Delete Button
+document.querySelectorAll(".delete").forEach(button => {
+    button.addEventListener("click", function () {
+        const row = this.closest("tr");
+        const name = row.children[0].textContent;
+
+        if (confirm("Delete " + name + "?")) {
+            row.remove();
+        }
+    });
+});
+
+// Add Donor Button
+const addBtn = document.querySelector(".add-btn");
+
+if(addBtn){
+	addBtn.addEventListener("click", (e) => {
+    		e.preventDefault();
+    		window.location.href="QR.html";
+	});
+	}
+
+// Pagination Button Active Effect
+const pageButtons = document.querySelectorAll(".pagination button");
+
+pageButtons.forEach(btn => {
+    btn.addEventListener("click", function () {
+
+        pageButtons.forEach(b => b.classList.remove("active"));
+
+        if (!this.querySelector("i")) {
+            this.classList.add("active");
+        }
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - NGO Fund Management System</title>
+    <style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f7f6;
+}
+
+.about{
+    padding:60px 20px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:#0b8b4b;
+    font-size:42px;
+    margin-bottom:25px;
+}
+
+.container p{
+    text-align:center;
+    font-size:18px;
+    color:#555;
+    line-height:1.8;
+    margin-bottom:40px;
+}
+
+.cards{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.card{
+    flex:1;
+    min-width:280px;
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card h2{
+    color:#0b8b4b;
+    margin-bottom:15px;
+}
+
+.card p{
+    text-align:left;
+    margin:0;
+    color:#666;
+}
+
+.features{
+    margin-top:50px;
+    background:#fff;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.features h2{
+    text-align:center;
+    color:#0b8b4b;
+    margin-bottom:20px;
+}
+
+.features ul{
+    list-style:none;
+    columns:2;
+}
+
+.features ul li{
+    padding:10px;
+    font-size:18px;
+    color:#444;
+}
+
+@media(max-width:768px){
+
+.cards{
+    flex-direction:column;
+}
+
+.features ul{
+    columns:1;
+}
+
+h1{
+    font-size:32px;
+}
+
+}
+</style>
+</head>
+<body>
+
+    <section class="about">
+        <div class="container">
+            <h1>About Us</h1>
+
+            <p>
+                The <strong>NGO Fund Management System</strong> is designed to help
+                non-governmental organizations manage donations, funds, and donor
+                information efficiently. Our goal is to provide a secure,
+                transparent, and user-friendly platform that improves financial
+                management and builds trust between NGOs and donors.
+            </p>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h2>🎯 Our Mission</h2>
+                    <p>
+                        To simplify fund management by providing a reliable and
+                        transparent digital platform for NGOs and donors.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>👁 Our Vision</h2>
+                    <p>
+                        To empower NGOs with modern technology that ensures
+                        accountability, efficiency, and successful fundraising.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>💡 What We Do</h2>
+                    <p>
+                        We maintain donor records, track donations, generate
+                        reports, and provide secure fund management for NGOs.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="features">
+                <h2>Key Features</h2>
+
+                <ul>
+                    <li>✔ Secure Donation Management</li>
+                    <li>✔ Donor Registration</li>
+                    <li>✔ Fund Tracking</li>
+                    <li>✔ Transparent Financial Reports</li>
+                    <li>✔ User-Friendly Dashboard</li>
+                    <li>✔ Data Security</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>

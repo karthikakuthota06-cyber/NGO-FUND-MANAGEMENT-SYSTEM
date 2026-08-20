@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Donor Profile</title>
+    
+    <style>
+     *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+   body {  
+        background:#c8e6c9; 
+   }
+   
+   .container { 
+       display:flex; 
+       min-height:100vh; 
+   }
+   
+/* Sidebar */
+
+        .sidebar{
+            width: 250px;
+            height: 100vh;
+            background: #0b2f2d;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            left: 0;
+            top: 0;
+            display: flex;
+        }
+        
+        .logo{
+            text-align:center;
+            padding:30px 20px;
+            border-bottom:1px solid rgba(255,255,255,.1);
+        }
+
+        .logo i{
+            font-size:45px;
+            color:#5fd38d;
+            margin-bottom:10px;
+        }
+
+        .logo h2{
+            font-size:22px;
+        }
+
+        .logo span{
+            font-size:13px;
+            color:#ddd;
+        }
+
+        .menu{
+            list-style:none;
+            padding:20px 0;
+            flex:1;
+        }
+
+        .menu li{
+            margin:8px 15px;
+        }
+
+        .menu li a{
+            text-decoration:none;
+            color:#fff;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:14px;
+            border-radius:8px;
+            transition:.3s;
+        }
+
+        .menu li a:hover,
+        .menu li.active a{
+            background:#2c8d57;
+        }
+
+        .logout{
+            padding:20px;
+            border-top:1px solid rgba(255,255,255,.1);
+            color:#fff;
+            text-decoration:none;
+            display:flex;
+            gap:12px;
+            align-items:center;
+            cursor:pointer;
+            margin-top: auto;
+        }
+.main{
+    flex:1;
+    padding:30px;
+}
+
+        /* Profile Header */
+        .header { display: flex; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        .avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #28a745; margin-right: 20px; }
+        .donor-info h2 { margin: 0 0 5px 0; color: #333; }
+        .donor-info p { margin: 4px 0; color: #666; font-size: 14px; }
+        
+        /* Stats Cards */
+        .stats-container { display: flex; gap: 15px; margin-bottom: 25px; }
+        .stat-card { flex: 1; background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center; border-left: 5px solid #28a745; }
+        .stat-card h3 { margin: 0; color: #2e7d32; font-size: 20px; }
+        .stat-card p { margin: 5px 0 0 0; color: #555; font-size: 14px; }
+
+        /* Table Styling */
+        h3 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
+        th { background-color: skyblue; color: #333; }
+        .badge { background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+
+        /* Buttons & Actions */
+        .btn-group { margin-top: 25px; display: flex; gap: 10px; }
+        button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; color: white; }
+        .edit-btn { background-color: green; color: #ffff; }
+        .edit-btn:hover { background-color: #e0a800; }
+        .logout-btn { background-color: #dc3545; }
+        .logout-btn:hover { background-color: #c82333; }
+
+        /* Edit Form Modal/Section */
+        .hidden { display: none; }
+        .edit-form { background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-top: 20px; }
+        .edit-form input { width: 100%; padding: 8px; margin: 8px 0 15px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .save-btn { background-color: #28a745; }
+        /* Responsive */
+
+        @media(max-width:1000px){
+
+        .cards{
+            grid-template-columns:repeat(2,1fr);
+        }
+
+        .content{
+            grid-template-columns:1fr;
+        }
+
+        }
+
+        @media(max-width:700px){
+
+        .sidebar{
+            width:70px;
+        }
+
+        .sidebar h2,
+        .sidebar span,
+        .menu li a span,
+        .logout a span{
+            display:none;
+        }
+
+        .main{
+            margin-left:70px;
+            width:calc(100% - 70px);
+        }
+
+        .cards{
+            grid-template-columns:1fr;
+        }
+
+        header h1{
+            font-size:24px;
+        }
+
+        }
+        .expense-card{
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .expense-card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 8px 20px rgba(0,0,0,0.15);
+        }
+    </style>
+     <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+      
+
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h2>NGO Fund</h2>
+                    <span>Management System</span>
+                </div>
+
+                <ul class="menu">
+
+                    <li>
+                        <a href="Dashboard.html">
+                            <i class="fas fa-house"></i>
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="donarprofile.html">
+                            <i class="fas fa-users"></i>
+                            Profile
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="Donations.html">
+                            <i class="fas fa-user"></i>
+                            Donations
+                        </a>
+                    </li>
+
+                    <li>
+
+                    <li>
+                        <a href="Expenses.html">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Expenses
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="Contact.html">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Contact Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-gear"></i>
+                            Settings
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="logout">
+                    <!--<a href="Login.html">-->
+                        <i class="fas fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+                </div>
+
+            </aside>
+             <!-- Main Content -->
+    <main class="main">
+        <!-- Profile Header Section -->
+        <div class="header">
+            <img id="donorPic" src="https://via.placeholder.com/100" alt=" " class="avatar">
+            <div class="donor-info">
+                <h2 id="donorName">Loading...</h2>
+                <p><strong>Email:</strong> <span id="donorEmail">Loading...</span></p>
+                <p><strong>Phone:</strong> <span id="donorPhone">Loading...</span></p>
+            </div>
+        </div>
+
+        <!-- Impact / Stats Section -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3 id="totalDonated">₹0</h3>
+                <p>Total Donated</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="totalTimes">0</h3>
+                <p>Times Contributed</p>
+            </div>
+        </div>
+
+        <!-- Donation History Table -->
+        <h3>Donation History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Campaign / Cause</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="donationTableBody">
+                <!-- Dynamic Data will load here -->
+            </tbody>
+        </table>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+            <button class="edit-btn" onclick="toggleEdit(true)">Edit Profile</button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Edit Profile Form (Hidden by default) -->
+        <div id="editSection" class="edit-form hidden">
+            <h3>Edit Profile Details</h3>
+            <label>Name:</label>
+            <input type="text" id="inputName">
+            <label>Phone:</label>
+            <input type="text" id="inputPhone">
+            <label>Profile Picture:</label>
+            <input type="file" id="inputPic" accept="image/*">
+            <button class="save-btn" onclick="saveProfile()">Save Changes</button>
+            <button class="logout-btn" onclick="toggleEdit(false)">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample Mock Data (Real project లో ఇది Database / API నుండి వస్తుంది)
+        //Logout
+const k = document.querySelector(".logout");
+	k.addEventListener("click", function(e){
+		e.preventDefault;
+		alert("Logout Successfully.");
+		window.location.href="Login.html";
+		});
+		
+        const donorData = {
+            name: localStorage.getItem('donorName') || "Ramesh Kumar",
+            email: localStorage.getItem('donorEmail') || "ramesh@example.com",
+            phone: localStorage.getItem('donorPhone') || "+91 9876543210",
+            pic: localStorage.getItem('donorPic') || "https://via.placeholder.com/100",
+            donations: [
+                { date: "15 Jul 2026", cause: "Child Education Fund", amount: "₹5,000", status: "Success" },
+                { date: "10 Jun 2026", cause: "Medical Relief Drive", amount: "₹2,500", status: "Success" },
+                { date: "02 May 2026", cause: "Annadanam (Food Donation)", amount: "₹1,000", status: "Success" }
+            ]
+        };
+
+        // Load Data to UI
+        function loadProfile() {
+            document.getElementById('donorName').innerText = donorData.name;
+            document.getElementById('donorEmail').innerText = donorData.email;
+            document.getElementById('donorPhone').innerText = donorData.phone;
+            document.getElementById('donorPic').src = donorData.pic;
+
+            // Calculate Totals
+            document.getElementById('totalDonated').innerText = "₹8,500";
+            document.getElementById('totalTimes').innerText = donorData.donations.length;
+
+            // Load Table Rows
+            const tableBody = document.getElementById('donationTableBody');
+            tableBody.innerHTML = "";
+            donorData.donations.forEach(item => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${item.date}</td>
+                        <td>${item.cause}</td>
+                        <td><strong>${item.amount}</strong></td>
+                        <td><span class="badge">${item.status}</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Toggle Edit Form
+        function toggleEdit(show) {
+            if(show) {
+                document.getElementById('inputName').value = donorData.name;
+                document.getElementById('inputPhone').value = donorData.phone;
+                document.getElementById('editSection').classList.remove('hidden');
+            } else {
+                document.getElementById('editSection').classList.add('hidden');
+            }
+        }
+
+        // Save Profile Changes
+        function saveProfile() {
+            donorData.name = document.getElementById('inputName').value;
+            donorData.phone = document.getElementById('inputPhone').value;
+
+            localStorage.setItem('donorName', donorData.name);
+            localStorage.setItem('donorPhone', donorData.phone);
+
+            const fileInput = document.getElementById('inputPic');
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    donorData.pic = e.target.result;
+                    localStorage.setItem('donorPic', donorData.pic);
+                    loadProfile();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                loadProfile();
+            }
+            toggleEdit(false);
+        }
+
+        function logout() {
+            localStorage.clear();
+            alert("Logged out successfully!");
+            window.location.href="Login.html";
+        }
+
+        // Initialize Page Load
+        loadProfile();
+    </script>
+
+</body>
+</html>

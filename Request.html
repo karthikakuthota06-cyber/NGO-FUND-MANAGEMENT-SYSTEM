@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compose Email</title>
+    <style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#c8e6c9;
+    color:#fff;
+}
+
+.container{
+    width:100%;
+    height:100vh;
+}
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+}
+
+.right-icons{
+    display:flex;
+    gap:20px;
+}
+
+.material-icons{
+    color:#d0d0d0;
+    cursor:pointer;
+    font-size:28px;
+}
+
+.row{
+    display:flex;
+    align-items:center;
+    padding:18px 20px;
+    border-bottom:1px solid #2a2a2a;
+}
+
+label{
+    width:60px;
+    color:#8f8f8f;
+    font-size:18px;
+}
+
+.email{
+    flex:1;
+    color:white;
+    font-size:18px;
+}
+
+.arrow{
+    font-size:24px;
+}
+
+input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:white;
+    font-size:18px;
+}
+
+.subject{
+    width:100%;
+}
+
+textarea{
+    width:100%;
+    height:calc(100vh - 210px);
+    background:#c8e6c9;
+    color:white;
+    border:none;
+    outline:none;
+    resize:none;
+    padding:20px;
+    font-size:18px;
+}
+
+textarea::placeholder,
+input::placeholder{
+    color:#8f8f8f;
+}
+</style>
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="Home.html"><span class="material-icons">arrow_back</span></a>
+
+        <div class="right-icons">
+    <button click="attachFile()">
+        <span class="material-icons">attach_file</span>
+    </button>
+
+    <button click="sendMessage()">
+        <span class="material-icons">send</span>
+    </button>
+
+    <button click="showMenu()">
+        <span class="material-icons">more_vert</span>
+    </button>
+        </div>
+    </div>
+
+    <!-- From -->
+    <div class="row">
+        <label>From</label>
+        <input type="text" class="from">
+    </div>
+
+    <!-- To -->
+    <div class="row">
+        <label>To</label>
+        <input type="email" placeholder="">
+    </div>
+
+    <!-- Subject -->
+    <div class="row">
+        <input type="text" placeholder="Subject" class="subject">
+    </div>
+
+    <!-- Email Body -->
+    <textarea placeholder="Compose email"></textarea>
+
+</div>
+
+<script>
+// Send button demo
+function attachFile() {
+    alert("Attach File button clicked");
+}
+
+function sendMessage() {
+    alert("Send button clicked");
+}
+
+function showMenu() {
+    alert("More options button clicked");
+}
+</script>
+</body>
+</html>
