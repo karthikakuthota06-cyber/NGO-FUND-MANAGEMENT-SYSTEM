@@ -1,627 +1,809 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NGO Fund Management Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NGO Fund Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- CSS -->
-    <style>
-    /* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    :root {
+      --brand-50:  #f0fdf4;
+      --brand-100: #dcfce7;
+      --brand-200: #bbf7d0;
+      --brand-300: #86efac;
+      --brand-500: #22c55e;
+      --brand-600: #16a34a;
+      --brand-700: #15803d;
+      --brand-800: #166534;
+      --brand-900: #14532d;
+      --gray-50:  #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-900: #111827;
+    }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+    html { scroll-behavior: smooth; }
 
-body{
-    display:flex;
-    background:#c8e6c9;;
-    color:#222;
-}
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #f8faf8;
+      color: var(--gray-900);
+      min-height: 100vh;
+    }
 
-/* Sidebar */
+    /* Scrollbar */
+    * { scrollbar-width: none; }
+    *::-webkit-scrollbar { display: none; }
 
-.sidebar{
-    width:250px;
-    height:100vh;
-    background:#0b2f2d;
-    color:#fff;
-    position:fixed;
-    left:0;
-    top:0;
-    display:flex;
-    flex-direction:column;
-}
+    /* ─── HEADER ─── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-100);
+      box-shadow: 0 1px 0 rgba(0,0,0,.06);
+    }
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: var(--brand-700);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 6px rgba(21,128,61,.35);
+      flex-shrink: 0;
+    }
+    .logo-icon svg { width: 20px; height: 20px; fill: #fff; }
+    .logo-text-main { font-size: 15px; font-weight: 600; color: var(--gray-900); line-height: 1.2; }
+    .logo-text-sub  { font-size: 10px; font-weight: 600; color: var(--brand-700); text-transform: uppercase; letter-spacing: .08em; }
 
-.logo{
-    text-align:center;
-    padding:30px 20px;
-    border-bottom:1px solid rgba(255,255,255,.1);
-}
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a {
+      font-size: 15px; font-weight: 500;
+      color: var(--gray-600);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--brand-700); }
 
-.logo i{
-    font-size:45px;
-    color:#5fd38d;
-    margin-bottom:10px;
-}
+    .header-actions { display: flex; align-items: center; gap: 12px; }
 
-.logo h2{
-    font-size:22px;
-}
+    .btn-outline {
+      padding: 9px 20px;
+      border-radius: 10px;
+      border: 1.5px solid var(--brand-200);
+      background: transparent;
+      color: var(--brand-700);
+      font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .btn-outline:hover { background: var(--brand-50); }
 
-.logo span{
-    font-size:13px;
-    color:#ddd;
-}
+    .btn-primary {
+      padding: 9px 20px;
+      border-radius: 10px;
+      border: none;
+      background: var(--brand-700);
+      color: #fff;
+      font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(21,128,61,.3);
+      transition: background .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { background: var(--brand-800); box-shadow: 0 4px 12px rgba(21,128,61,.4); }
 
-.menu{
-    list-style:none;
-    padding:20px 0;
-    flex:1;
-}
+    .burger {
+      display: none;
+      background: none; border: none;
+      cursor: pointer; padding: 6px;
+      border-radius: 8px;
+      color: var(--gray-600);
+      transition: background .2s;
+    }
+    .burger:hover { background: var(--gray-100); }
+    .burger svg { display: block; width: 22px; height: 22px; }
 
-.menu li{
-    margin:8px 15px;
-}
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      background: #fff;
+      border-top: 1px solid var(--gray-100);
+      padding: 16px 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 15px; font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none; cursor: pointer;
+      padding: 4px 0;
+    }
+    .mobile-menu-btns { display: flex; gap: 10px; padding-top: 8px; }
+    .mobile-menu-btns button { flex: 1; }
 
-.menu li a{
-    text-decoration:none;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:14px 18px;
-    border-radius:10px;
-    transition:.3s;
-}
+    /* ─── HERO ─── */
+    .hero {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 24px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
 
-.menu li a:hover,
-.menu li.active a{
-    background:#2c8d57;
-}
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--brand-50);
+      border: 1px solid var(--brand-200);
+      color: var(--brand-700);
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--brand-500);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .6; transform: scale(1.2); }
+    }
 
-.logout{
-    padding:20px;
-    border-top:1px solid rgba(255,255,255,.1);
-    color:#fff;
-    text-decoration:none;
-    display:flex;
-    gap:12px;
-    align-items:center;
-    cursor:pointer;
-}
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(44px, 5vw, 62px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--gray-900);
+      margin-bottom: 24px;
+    }
+    h1 .accent { color: var(--brand-700); }
 
-/* Main */
+    .hero-desc {
+      font-size: 18px; color: var(--gray-500);
+      line-height: 1.7; max-width: 420px;
+      margin-bottom: 36px;
+    }
 
-.main{
-    margin-left:250px;
-    width:calc(100% - 250px);
-    padding:25px; 
-}
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 16px; }
+    .btn-hero-primary {
+      padding: 15px 36px;
+      border-radius: 14px;
+      border: none;
+      background: var(--brand-700);
+      color: #fff;
+      font-size: 15px; font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(21,128,61,.35);
+      transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-hero-primary:hover { background: var(--brand-800); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(21,128,61,.4); }
+    .btn-hero-secondary {
+      padding: 15px 36px;
+      border-radius: 14px;
+      border: 2px solid var(--gray-200);
+      background: transparent;
+      color: var(--gray-800);
+      font-size: 15px; font-weight: 600;
+      cursor: pointer;
+      transition: border-color .2s, transform .2s;
+    }
+    .btn-hero-secondary:hover { border-color: var(--brand-300); transform: translateY(-2px); }
 
-/* Header */
+    /* Mini stats */
+    .mini-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .mini-stat-val { font-size: 24px; font-weight: 700; color: var(--gray-900); }
+    .mini-stat-lbl { font-size: 11px; color: var(--gray-400); font-weight: 500; margin-top: 2px; }
 
-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:30px;
-}
+    /* Hero image */
+    .hero-image-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-img-box {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      aspect-ratio: 4/3;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.18);
+    }
+    .hero-img-box img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,83,45,.6) 0%, rgba(20,83,45,.1) 50%, transparent 100%);
+    }
 
-.left{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
+    /* Floating campaign card */
+    .campaign-card {
+      position: absolute;
+      bottom: 20px; left: 20px; right: 20px;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.14);
+    }
+    .campaign-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .campaign-label { font-size: 11px; color: var(--gray-400); font-weight: 500; margin-bottom: 3px; }
+    .campaign-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+    .campaign-amount { font-size: 16px; font-weight: 700; color: var(--brand-700); text-align: right; }
+    .campaign-goal   { font-size: 11px; color: var(--gray-400); text-align: right; }
+    .progress-bar-bg { height: 6px; border-radius: 99px; background: var(--gray-100); margin-top: 12px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; width: 82%; border-radius: 99px; background: var(--brand-500); }
+    .progress-label { font-size: 11px; color: var(--gray-400); margin-top: 6px; }
 
-#menu-btn{
-    border:none;
-    background:none;
-    font-size:22px;
-    cursor:pointer;
-}
+    /* Badge circle */
+    .hero-badge {
+      position: absolute;
+      top: -16px; right: -16px;
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: var(--brand-100);
+      border: 4px solid #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,.12);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .hero-badge-num { font-size: 24px; font-weight: 700; color: var(--brand-700); line-height: 1; }
+    .hero-badge-lbl { font-size: 8.5px; font-weight: 700; color: var(--brand-600); text-align: center; line-height: 1.3; margin-top: 2px; text-transform: uppercase; }
 
-.right{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
+    /* ─── STATS BAR ─── */
+    .stats-bar-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 24px 24px;
+    }
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--gray-200);
+      border-radius: 20px;
+      overflow: hidden;
+      gap: 1px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .stat-cell {
+      background: #fff;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .stat-cell-val { font-size: 28px; font-weight: 700; color: var(--brand-700); }
+    .stat-cell-lbl { font-size: 10px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin-top: 4px; }
 
-.notification{
-    font-size:22px;
-    cursor:pointer;
-}
+    /* ─── FEATURES ─── */
+    .features-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 24px 80px;
+    }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700;
+      color: var(--brand-700);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4vw, 46px);
+      font-weight: 400;
+      color: var(--gray-900);
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 48px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid var(--gray-100);
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      cursor: default;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.1);
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: var(--brand-50);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      background: var(--brand-700);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 14px rgba(21,128,61,.35);
+      transition: transform .3s;
+    }
+    .feature-card:hover .feature-icon { transform: scale(1.1); }
+    .feature-icon svg { width: 26px; height: 26px; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .feature-title { font-size: 20px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; }
+    .feature-desc  { font-size: 15px; color: var(--gray-500); line-height: 1.65; margin-bottom: 24px; }
+    .feature-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .feature-stat-val { font-size: 24px; font-weight: 700; color: var(--brand-700); }
+    .feature-stat-lbl { font-size: 11px; color: var(--gray-400); font-weight: 500; }
+    .feature-arrow {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray-200);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-400);
+      transition: border-color .2s, color .2s;
+    }
+    .feature-card:hover .feature-arrow { border-color: var(--brand-300); color: var(--brand-600); }
+    .feature-arrow svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-.profile{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+    /* ─── CTA BANNER ─── */
+    .cta-section { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
+    .cta-box {
+      position: relative;
+      border-radius: 28px;
+      background: var(--brand-800);
+      overflow: hidden;
+    }
+    .cta-glow-1 {
+      position: absolute;
+      top: -80px; left: 33%;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: var(--brand-300);
+      opacity: .12;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .cta-glow-2 {
+      position: absolute;
+      bottom: -60px; right: 25%;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: var(--brand-200);
+      opacity: .12;
+      filter: blur(50px);
+      pointer-events: none;
+    }
+    .cta-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 56px 48px;
+    }
+    .cta-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 3.5vw, 38px);
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .cta-sub { font-size: 15px; color: #bbf7d0; max-width: 340px; line-height: 1.6; }
+    .cta-btns { display: flex; flex-wrap: wrap; gap: 14px; flex-shrink: 0; }
+    .btn-cta-white {
+      padding: 14px 32px;
+      border-radius: 12px;
+      border: none;
+      background: #fff;
+      color: var(--brand-800);
+      font-size: 15px; font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-cta-white:hover { background: var(--brand-50); }
+    .btn-cta-ghost {
+      padding: 14px 32px;
+      border-radius: 12px;
+      border: 1.5px solid var(--brand-500);
+      background: transparent;
+      color: #fff;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-cta-ghost:hover { background: var(--brand-700); }
 
-.profile img{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-}
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--gray-100);
+      background: #fff;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-logo-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: var(--brand-700);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-logo-icon svg { width: 14px; height: 14px; fill: #fff; }
+    .footer-brand { font-size: 13px; font-weight: 600; color: var(--gray-700); }
+    .footer-copy { font-size: 11px; color: var(--gray-400); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 11px; color: var(--gray-400); text-decoration: none; cursor: pointer; transition: color .2s; }
+    .footer-links a:hover { color: var(--gray-700); }
 
-/* Cards */
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .hero { gap: 40px; }
+      .feature-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+    }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    margin-bottom:25px;
-}
+    @media (max-width: 768px) {
+      nav, .header-actions { display: none; }
+      .burger { display: flex; align-items: center; justify-content: center; }
 
-.card{
-    background:#fff;
-    border-radius:15px;
-    padding:25px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+        text-align: center;
+      }
+      .hero-desc { max-width: 100%; }
+      .hero-btns { justify-content: center; }
+      .mini-stats { justify-content: center; }
+      .hero-image-wrap { order: -1; }
+      .hero-badge { top: -12px; right: 0; }
 
-.card p{
-    color:#666;
-    font-size:18px;
-    line-height:1.6;
-}
+      .stats-bar { grid-template-columns: 1fr 1fr; }
 
-.card h4{
-    color:#777;
-    margin-bottom:10px;
-}
+      .cta-inner { flex-direction: column; text-align: center; padding: 40px 28px; }
+      .cta-btns { justify-content: center; }
 
-.card h2{
-    margin-bottom:8px;
-    font-size:30px;
-}
+      .footer-inner { flex-direction: column; text-align: center; gap: 12px; }
+    }
 
-.green{
-    color:"green";
-}
-
-.blue{
-    color:"blue";
-}
-
-.orange{
-    color:"orange";
-}
-
-.purple{
-    color:"purple";
-}
-
-/* Content */
-
-.content{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:25px;
-}
-
-.chart-box,
-.transactions{
-    background:#fff;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-.box-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.box-title a{
-    text-decoration:none;
-    color:#2c8d57;
-    font-weight:600;
-}
-
-canvas{
-    width:100% !important;
-    height:350px !important;
-}
-
-/* Transactions */
-
-.transaction{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 0;
-    border-bottom:1px solid #eee;
-}
-
-.transaction:last-child{
-    border:none;
-}
-
-.info{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.info i{
-    font-size:28px;
-}
-
-.info h4{
-    font-size:15px;
-    margin-bottom:4px;
-}
-
-.info small{
-    color:#777;
-}
-
-/* Responsive */
-
-@media(max-width:1000px){
-
-.cards{
-    grid-template-columns:repeat(2,1fr);
-}
-
-.content{
-    grid-template-columns:1fr;
-}
-
-}
-
-@media(max-width:700px){
-
-.sidebar{
-    width:70px;
-}
-
-.sidebar h2,
-.sidebar span,
-.menu li a span,
-.logout a span{
-    display:none;
-}
-
-.main{
-    margin-left:70px;
-    width:calc(100% - 70px);
-}
-
-.cards{
-    grid-template-columns:1fr;
-}
-
-header h1{
-    font-size:24px;
-}
-
-}
-.expense-card{
-	cursor:pointer;
-	transition:0.3s;
-}
-
-.expense-card:hover{
-	transform:translateY(-5px);
-	box-shadow:0 8px 20px rgba(0,0,0,0.15);
-}
-</style>
-	
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @media (max-width: 480px) {
+      h1 { font-size: 38px; }
+      .hero-btns { flex-direction: column; }
+      .btn-hero-primary, .btn-hero-secondary { width: 100%; }
+      .stats-bar { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-
-        <div class="logo">
-            <i class="fas fa-seedling"></i>
-            <h2>NGO Fund</h2>
-            <span>Management System</span>
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="header-inner">
+      <a class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.19L5.71 21 7 19.1A4.008 4.008 0 0010 20c3 0 5-2 5-5V8z"/></svg>
         </div>
-
-        <ul class="menu">
-
-            <li class="active">
-                <a href="Dashboard.html">
-                    <i class="fas fa-house"></i>
-                    Dashboard
-                </a>
-            </li>
-
- <li>
-                <a href="donarprofile.html">
-                    <i class="fas fa-users"></i>
-                    Profile
-                </a>
-            </li>
-            
-            <li>
-                <a href="Donations.html">
-                    <i class="fas fa-user"></i>
-                    Donations
-                </a>
-            </li>
-
-            <li>
-
-            <li>
-                <a href="Expenses.html">
-                    <i class="fas fa-money-bill-wave"></i>
-                    Expenses
-                </a>
-            </li>
-	    <li>
-                <a href="Contact.html">
-                    <i class="fas fa-money-bill-wave"></i>
-                    Contact Us
-                </a>
-            </li>
-            <li>
-
-            <li>
-                <a href="settings.html">
-                    <i class="fas fa-gear"></i>
-                    Settings
-                </a>
-            </li>
-
-        </ul>
-
-        <div class="logout">
-            <!--<a href="Login.html">-->
-                <i class="fas fa-right-from-bracket"></i>
-                Logout
-            </a>
+        <div>
+          <div class="logo-text-main">NGO Fund</div>
+          <div class="logo-text-sub">Management System</div>
         </div>
+      </a>
 
-    </aside>
+      <nav>
+        <a class="nav-about">About Us</a>
+        <a class="nav-contact">Contact Us</a>
+      </nav>
 
-    <!-- Main -->
-    <main class="main">
+      <div class="header-actions">
+        <button class="btn-outline btn-login">Login</button>
+        <button class="btn-primary btn-donate-nav">Donate Now</button>
+      </div>
 
-        <!-- Header -->
-        <header>
+      <button class="burger" id="burger" aria-label="Toggle menu">
+        <svg id="burger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
 
-            <div class="left">
+    <div class="mobile-menu" id="mobile-menu">
+      <a class="nav-about">About Us</a>
+      <a class="nav-contact">Contact Us</a>
+      <div class="mobile-menu-btns">
+        <button class="btn-outline btn-login">Login</button>
+        <button class="btn-primary btn-donate-nav">Donate Now</button>
+      </div>
+    </div>
+  </header>
 
-                <button id="menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Trusted by 200+ Donors
+      </div>
+      <h1>
+        <span class="accent">Together</span> We<br>
+        Can Make a<br>
+        Difference
+      </h1>
+      <p class="hero-desc">
+        Transparent fund management for greater impact — every contribution tracked, every outcome reported.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-hero-primary btn-donate">Donate Now</button>
+        <button class="btn-hero-secondary btn-request">Request Funds</button>
+      </div>
+      <div class="mini-stats">
+        <div>
+          <div class="mini-stat-val">₹2.4Cr</div>
+          <div class="mini-stat-lbl">Total Funds Raised</div>
+        </div>
+        <div>
+          <div class="mini-stat-val">48</div>
+          <div class="mini-stat-lbl">Active Projects</div>
+        </div>
+        <div>
+          <div class="mini-stat-val">4,800+</div>
+          <div class="mini-stat-lbl">Beneficiaries</div>
+        </div>
+      </div>
+    </div>
 
-                <h1>Dashboard</h1>
-
+    <div class="hero-image-wrap">
+      <div class="hero-img-box">
+        <img
+          src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=920&h=690&fit=crop&auto=format"
+          alt="Volunteers collaborating together"
+          loading="eager"
+        />
+        <div class="hero-img-overlay"></div>
+        <div class="campaign-card">
+          <div class="campaign-card-top">
+            <div>
+              <div class="campaign-label">Latest Campaign</div>
+              <div class="campaign-title">Education for 500 Children</div>
             </div>
-
-            <div class="right">
-
-                <div class="profile">
-                    <img src="https://i.pravatar.cc/40" alt="">
-                    <span>Admin</span>
-                </div>
-
+            <div>
+              <div class="campaign-amount">₹8.2L</div>
+              <div class="campaign-goal">of ₹10L goal</div>
             </div>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill"></div>
+          </div>
+          <div class="progress-label">82% funded &middot; 18 days left</div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-num">48</div>
+        <div class="hero-badge-lbl">Active<br>Projects</div>
+      </div>
+    </div>
+  </section>
 
-        </header>
+  <!-- ═══ STATS BAR ═══ -->
+  <div class="stats-bar-wrap">
+    <div class="stats-bar">
+      <div class="stat-cell">
+        <div class="stat-cell-val">₹2.4Cr</div>
+        <div class="stat-cell-lbl">Total Funds Raised</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val">48</div>
+        <div class="stat-cell-lbl">Active Projects</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val">4,800+</div>
+        <div class="stat-cell-lbl">Beneficiaries</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val">12</div>
+        <div class="stat-cell-lbl">Districts Covered</div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Cards -->
-        <section class="cards">
-<div class="col-md-3">
-<div class="card shadow-sm expense-card" onclick="window.location.href='Donations.html'">
+  <!-- ═══ FEATURES ═══ -->
+  <section class="features-section">
+    <p class="section-eyebrow">Why Choose Us</p>
+    <h2 class="section-title">Built on Trust,<br>Driven by Impact</h2>
 
-            <div class="card">
-                <h4>Total Donations</h4>
-                <h2>₹12,45,000</h2>
-                <p class="green">↑ 10% this month</p>
-            </div>
-            </div>
-            </div>
+    <div class="feature-grid">
 
-<div class="col-md-3">
-<div class="card shadow-sm expense-card">
-            <div class="card">
-                <h4>Total Projects</h4>
-                <h2>24</h2>
-                <p class="blue">↑ 8% this month</p>
-            </div>
-            </div>
-            </div>
-<div class="col-md-3">
-<div class="card shadow-sm expense-card" onclick="window.location.href='Expenses.html'">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+          </svg>
+        </div>
+        <div class="feature-title">Transparency</div>
+        <p class="feature-desc">100% transparent fund utilization with real-time reporting dashboards accessible to all stakeholders.</p>
+        <div class="feature-footer">
+          <div>
+            <div class="feature-stat-val">100%</div>
+            <div class="feature-stat-lbl">Audit Visibility</div>
+          </div>
+          <div class="feature-arrow">
+            <svg viewBox="0 0 24 24"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </div>
+        </div>
+      </div>
 
-            <div class="card">
-                <h4>Total Expenses</h4>
-                <h2>₹6,20,000</h2>
-                <p class="orange">↓ 3% this month</p>
-            </div>
-            </div>
-            </div>
-<div class="col-md-3">
-<div class="card shadow-sm expense-card">
-            <div class="card">
-                <h4>Available Balance</h4>
-                <h2>₹6,25,000</h2>
-                <p class="purple">↑ 15% this month</p>
-            </div>
-            </div>
-            </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/>
+          </svg>
+        </div>
+        <div class="feature-title">Accountability</div>
+        <p class="feature-desc">Every rupee tracked, every decision documented. Committed to accountable and ethical operations.</p>
+        <div class="feature-footer">
+          <div>
+            <div class="feature-stat-val">₹2.4Cr</div>
+            <div class="feature-stat-lbl">Funds Managed</div>
+          </div>
+          <div class="feature-arrow">
+            <svg viewBox="0 0 24 24"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </div>
+        </div>
+      </div>
 
-        </section>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+          </svg>
+        </div>
+        <div class="feature-title">Impact</div>
+        <p class="feature-desc">Delivering real, measurable impact to underserved communities across 12 districts.</p>
+        <div class="feature-footer">
+          <div>
+            <div class="feature-stat-val">4,800+</div>
+            <div class="feature-stat-lbl">Lives Touched</div>
+          </div>
+          <div class="feature-arrow">
+            <svg viewBox="0 0 24 24"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </div>
+        </div>
+      </div>
 
-        <!-- Content -->
-        <section class="content">
+    </div>
+  </section>
 
-            <!-- Chart -->
-            <div class="chart-box">
+  <!-- ═══ CTA BANNER ═══ -->
+  <section class="cta-section">
+    <div class="cta-box">
+      <div class="cta-glow-1"></div>
+      <div class="cta-glow-2"></div>
+      <div class="cta-inner">
+        <div>
+          <h2 class="cta-heading">Ready to Make an Impact?</h2>
+          <p class="cta-sub">Join 200+ donors and organizations using transparent fund management.</p>
+        </div>
+        <div class="cta-btns">
+          <button class="btn-cta-white btn-donate">Donate Now</button>
+          <button class="btn-cta-ghost btn-request">Request Funds</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                <div class="box-title">
-                    <h3>Donation Overview</h3>
-                </div>
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.19L5.71 21 7 19.1A4.008 4.008 0 0010 20c3 0 5-2 5-5V8z"/></svg>
+        </div>
+        <span class="footer-brand">NGO Fund Management</span>
+      </div>
+      <p class="footer-copy">&copy; 2026 NGO Fund Management System. All rights reserved.</p>
+      <div class="footer-links">
+        <a>Privacy</a>
+        <a>Terms</a>
+        <a class="nav-contact">Contact</a>
+      </div>
+    </div>
+  </footer>
 
-                <canvas id="donationChart"></canvas>
+  <script>
+    // ── Mobile menu toggle ──
+    const burger     = document.getElementById('burger');
+    const burgerIcon = document.getElementById('burger-icon');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
 
-            </div>
-
-            <!-- Transactions -->
-            <div class="transactions">
-
-                <div class="box-title">
-                    <h3>Recent Transactions</h3>
-                    <a href="#">View All</a>
-                </div>
-
-                <div class="transaction">
-                    <div class="info">
-                        <i class="fas fa-circle-user green"></i>
-                        <div>
-                            <h4>Donation from Ramesh</h4>
-                            <small>15 May, 2024</small>
-                        </div>
-                    </div>
-                    <span>₹10,000</span>
-                </div>
-
-                <div class="transaction">
-                    <div class="info">
-                        <i class="fas fa-circle-user orange"></i>
-                        <div>
-                            <h4>Expense - Project A</h4>
-                            <small>14 May, 2024</small>
-                        </div>
-                    </div>
-                    <span>₹5,000</span>
-                </div>
-
-                <div class="transaction">
-                    <div class="info">
-                        <i class="fas fa-circle-user green"></i>
-                        <div>
-                            <h4>Donation from Priya</h4>
-                            <small>13 May, 2024</small>
-                        </div>
-                    </div>
-                    <span>₹20,000</span>
-                </div>
-
-                <div class="transaction">
-                    <div class="info">
-                        <i class="fas fa-circle-user purple"></i>
-                        <div>
-                            <h4>Expense - Project B</h4>
-                            <small>12 May, 2024</small>
-                        </div>
-                    </div>
-                    <span>₹8,000</span>
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <script>
-    // Sidebar Toggle (for mobile)
-
-const menuBtn = document.getElementById("menu-btn");
-const sidebar = document.querySelector(".sidebar");
-
-menuBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("show");
-});
-
-const car = document.querySelectorAll(".card");
-
-    car.forEach(card => {
-        card.addEventListener("mouseenter", () => {
-            card.style.transform = "translateY(-10px)";
-            card.style.transition = "0.3s";
-        });
-
-        card.addEventListener("mouseleave", () => {
-            card.style.transform = "translateY(0)";
-        });
+    burger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      burgerIcon.innerHTML = menuOpen
+        ? '<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>'
+        : '<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>';
     });
-    
-    //Logout
-const k = document.querySelector(".logout");
-	k.addEventListener("click", function(e){
-		e.preventDefault;
-		alert("Logout Successfully.");
-		window.location.href="Login.html";
-		});
-    
-// Donation Overview Chart
 
-const ctx = document.getElementById("donationChart").getContext("2d");
-
-new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-        datasets: [{
-            label: "Donations",
-            data: [30000, 120000, 50000, 160000, 100000, 140000, 200000],
-            borderColor: "#2e8b57",
-            backgroundColor: "rgba(46,139,87,0.15)",
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: "#2e8b57",
-            pointBorderColor: "#ffffff",
-            pointBorderWidth: 2,
-            pointRadius: 5
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                backgroundColor: "#2e8b57",
-                callbacks: {
-                    label: function(context) {
-                        return " ₹" + context.raw.toLocaleString();
-                    }
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value) {
-                        return value / 1000 + "K";
-                    }
-                },
-                grid: {
-                    color: "#eeeeee"
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                }
-            }
-        }
-    }
-});
-    </script>
-
+    // ── Navigation ──
+    document.querySelectorAll('.nav-about').forEach(el =>
+      el.addEventListener('click', () => window.location.href = 'about.html')
+    );
+    document.querySelectorAll('.nav-contact').forEach(el =>
+      el.addEventListener('click', () => window.location.href = 'Contact.html')
+    );
+    document.querySelectorAll('.btn-login').forEach(el =>
+      el.addEventListener('click', () => window.location.href = 'login.html')
+    );
+    document.querySelectorAll('.btn-donate, .btn-donate-nav').forEach(el =>
+      el.addEventListener('click', () => window.location.href = 'QR.html')
+    );
+    document.querySelectorAll('.btn-request').forEach(el =>
+      el.addEventListener('click', () => window.location.href = 'Request.html')
+    );
+  </script>
 </body>
 </html>
